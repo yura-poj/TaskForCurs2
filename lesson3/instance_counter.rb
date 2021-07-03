@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module InstanceCounter
   def self.included(base)
     base.extend(ClassMethods)
@@ -5,19 +7,23 @@ module InstanceCounter
   end
 
   module ClassMethods
-    attr_accessor :counter
+    attr_reader :counter
 
     def instances
-      puts @counter
+      @counter
     end
+
+    private
+
+    attr_writer :counter
   end
 
   module InstanceMethods
     private
 
     def register_instance
-      self.class.counter ||= 0
-      self.class.counter += 1
+      @@counter ||= 0
+      @@counter += 1
     end
   end
 end

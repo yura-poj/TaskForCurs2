@@ -7,7 +7,6 @@ RSpec.describe Route do
     described_class.new(start_station: stations.first, finish_station: stations.last)
   end
 
-
   describe '#delete_station' do
     before { subject.add_station(station: stations[1]) }
 

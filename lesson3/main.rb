@@ -1,3 +1,9 @@
+# frozen_string_literal: true
+
+require_relative 'route'
+require_relative 'station'
+require_relative 'cargo_train'
+require_relative 'passenger_train'
 #      - Создавать станции
 #      - Создавать поезда
 #      - Создавать маршруты и управлять станциями в нем (добавлять, удалять)
@@ -6,10 +12,6 @@
 #      - Отцеплять вагоны от поезда
 #      - Перемещать поезд по маршруту вперед и назад
 #      - Просматривать список станций и список поездов на станции
-require_relative 'route'
-require_relative 'station'
-require_relative 'cargo_train'
-require_relative 'passenger_train'
 
 class Conductor
   def initialize
@@ -191,7 +193,7 @@ class Conductor
       when 1
         train.add_route(choose_route)
       when 2
-        train_move
+        train_move(train)
       end
     end
   end
@@ -281,7 +283,7 @@ class Conductor
     route.add_station(@stations[gets])
   end
 
-  def act_with_chosed_carriage
+  def act_with_chosed_carriage(train)
     carriage = choose_carriage(train)
     puts '0 - back 1 - fill 2 - free'
     choice = gets.to_i

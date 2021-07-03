@@ -5,7 +5,7 @@ require 'byebug'
 
 RSpec.describe Station do
   subject { described_class.new('A') }
-  let(:trains) { [Train.new(12345), Train.new(12341)] }
+  let(:trains) { [Train.new(12_345), Train.new(12_341)] }
 
   describe 'train_leave' do
     before do
