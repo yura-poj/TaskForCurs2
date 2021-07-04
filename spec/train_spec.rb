@@ -18,9 +18,9 @@ RSpec.describe Train do
   end
 
   describe '.instances' do
-    let(:trains) { build_list(:train, 2) }
+    let(:trains) { [Train.new('00001')] }
 
-    it 'return count of trian instances' do
+    it 'return count of train instances' do
       expect(described_class.instances).to eq trains.size
     end
   end

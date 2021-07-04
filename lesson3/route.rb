@@ -10,10 +10,10 @@ require 'byebug'
 # Может выводить список всех станций по-порядку от начальной до конечной
 
 class Route
-  attr_reader :route_list
+  attr_reader :stations_list
 
   def initialize(start_station:, finish_station:)
-    @route_list = [start_station, finish_station]
+    @stations_list = [start_station, finish_station]
     valid!
   end
 
@@ -25,19 +25,19 @@ class Route
   end
 
   def add_station(station:)
-    @route_list.insert(1, station)
+    @stations_list.insert(1, station)
   end
 
   def delete_station(obj:)
-    return 'impossible' if obj == @route_list[0] && obj == route_list[-1]
+    return 'impossible' if obj == @stations_list[0] && obj == stations_list[-1]
 
-    @route_list.delete(obj)
+    @stations_list.delete(obj)
   end
 
   private
 
   def valid!
-    raise 'Value is not object' unless @route_list.all? { |route| route.is_a? Station }
+    raise 'Value is not object' unless @stations_list.all? { |route| route.is_a? Station }
   end
 end
 
