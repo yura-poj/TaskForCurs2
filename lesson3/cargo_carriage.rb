@@ -6,9 +6,9 @@ class CargoCarriage < Carriage
   attr_reader :taked_space
 
   def initialize(number_of_space = 50)
+    super()
     @taked_space = 0
     @number_of_space = number_of_space
-    register_instance
   end
 
   def take_space

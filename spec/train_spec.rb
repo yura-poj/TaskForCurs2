@@ -2,7 +2,6 @@ require 'spec_helper'
 require_relative '../lesson3/train'
 
 RSpec.describe Train do
-
   describe '.find' do
     context 'when train with that number exists' do
       let(:train) { Train.new('00001') }
@@ -15,6 +14,14 @@ RSpec.describe Train do
       it 'return nil' do
         expect(Train.find('11122')).to be_nil
       end
+    end
+  end
+
+  describe '.instances' do
+    let(:trains) { [Train.new('00001')] }
+
+    it 'return count of train instances' do
+      expect(described_class.instances).to eq trains.size
     end
   end
 end

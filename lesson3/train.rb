@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'manufacturer'
 require_relative 'instance_counter'
 require 'byebug'
@@ -63,6 +65,7 @@ class Train
   def add_route(route)
     @route = route
     @location = 0
+    add_self_on_station
   end
 
   def next_station
@@ -89,13 +92,11 @@ class Train
     nil
   end
 
-  protected
+  private
 
   def add_carriage!(carriage)
     @carriages.push(carriage)
   end
-
-  private
 
   def valid!
     raise 'value is empty' if @number.nil?
@@ -124,10 +125,16 @@ class Train
 
   def next_station!
     @location += 1
+    add_self_on_station
   end
 
   def previous_station!
     @location -= 1
+    add_self_on_station
+  end
+
+  def add_self_on_station
+    @route.stations_list[@location].add_train(self)
   end
 end
 __END__

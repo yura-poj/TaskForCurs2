@@ -7,13 +7,12 @@ RSpec.describe Route do
     described_class.new(start_station: stations.first, finish_station: stations.last)
   end
 
-
   describe '#delete_station' do
     before { subject.add_station(station: stations[1]) }
 
     it 'delete station from station list' do
-      subject.delete_station(obj: subject.route_list[1])
-      expect(subject.route_list).to eq([stations.first, stations.last])
+      subject.delete_station(obj: subject.stations_list[1])
+      expect(subject.stations_list).to eq([stations.first, stations.last])
     end
   end
 end
