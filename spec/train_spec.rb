@@ -21,7 +21,7 @@ RSpec.describe Train do
     let(:trains) { [Train.new('00001')] }
 
     it 'return count of train instances' do
-      expect(described_class.instances).to eq trains.size
+      expect(Train.counter).to eq trains.size
     end
   end
 end

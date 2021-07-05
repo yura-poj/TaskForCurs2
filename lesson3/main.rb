@@ -14,6 +14,8 @@ require_relative 'remote_station'
 
 class Conductor
   GREETING = "0 - exit\n 1 - act with stations \n2 - act with route \n3 - act with train"
+  METHODS = { 1 => :act_with_station, 2 => :act_with_route, 3 => :act_with_route }.freeze
+  TYPE_ERROR_MESSAGE = 'Enter a right number'
 
   def initialize
     @remote_station = RemoteStation.new
@@ -25,21 +27,27 @@ class Conductor
     loop do
       puts GREETING
       choice = gets.to_i
+      break if choice.zero?
 
-      case choice
-      when 0
-        break
-      when 1
-        @remote_station.act_with_station
-      when 2
-        @remote_route.act_with_route
-      when 3
-        @remote_train.act_with_train
-      end
+      send METHODS[choice]
+    rescue TypeError
+      puts TYPE_ERROR_MESSAGE
     end
   end
 
   private
+
+  def act_with_station
+    @remote_station.act_with_station
+  end
+
+  def act_with_route
+    @remote_route.act_with_route
+  end
+
+  def act_with_train
+    @remote_train.act_with_train
+  end
 end
 
 # __END__
