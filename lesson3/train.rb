@@ -2,6 +2,8 @@
 
 require_relative 'manufacturer'
 require_relative 'instance_counter'
+require_relative 'accessors'
+require_relative 'validation'
 require 'byebug'
 # Имеет номер (произвольная строка) и тип (грузовой, пассажирский) и количество вагонов,
 # эти данные указываются при создании экземпляра класса
@@ -20,11 +22,16 @@ require 'byebug'
 class Train
   include Manufacturer
   include InstanceCounter
-
-  attr_accessor :speed, :number
-  attr_reader :carriages
+  include Validation
+  extend Accessors
 
   NUMBER_FORMAT = /^(\d|[a-z]|[а-я]){3}-?(\d|[a-z]|[а-я]){2}$/i
+
+  attr_accessor_with_history :speed, :number
+  attr_reader :carriages
+  validate :number, :presence
+  validate :number, :format, NUMBER_FORMAT
+
 
   def self.find(number_find)
     ObjectSpace.each_object(self).find { |obj| obj.number == number_find.to_s }
@@ -36,13 +43,6 @@ class Train
     @carriages = []
     valid!
     register_instance
-  end
-
-  def valid?
-    valid!
-    true
-  rescue StandardError
-    false
   end
 
   def stop
@@ -98,11 +98,6 @@ class Train
     @carriages.push(carriage)
   end
 
-  def valid!
-    raise 'value is empty' if @number.nil?
-    raise 'format is not right' if @number !~ NUMBER_FORMAT
-  end
-
   def types_of_train_and_carriage_are_not_equal?(carriage)
     carriage.type != type
   end
@@ -137,7 +132,12 @@ class Train
     @route.stations_list[@location].add_train(self)
   end
 end
+
+train = Train.new(12345)
+
 __END__
+
+p train.a
 require_relative 'carriage'
 train = Train.new(12345)
 train.add_carriage(Carriage.new)

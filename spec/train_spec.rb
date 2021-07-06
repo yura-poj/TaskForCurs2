@@ -24,4 +24,18 @@ RSpec.describe Train do
       expect(Train.counter).to eq trains.size
     end
   end
+
+  describe '.attr_accessor_with_history' do
+    let(:train) { Train.new('00001') }
+    before do
+      train.speed = 2
+      train.speed = 3
+    end
+    it 'get instance variable' do
+      expect(train.speed).to eq(3)
+    end
+    it 'get variable history of changes' do
+      expect(train.speed_history).to eq [2, 3]
+    end
+  end
 end
