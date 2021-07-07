@@ -2,9 +2,10 @@ require 'spec_helper'
 require_relative '../lesson3/train'
 
 RSpec.describe Train do
+  let(:train) { Train.new('00001') }
+  let(:trains) { [Train.new('00001')] }
   describe '.find' do
     context 'when train with that number exists' do
-      let(:train) { Train.new('00001') }
       it 'reutn train' do
         expect(Train.find(train.number)).to eq(train)
       end
@@ -18,7 +19,6 @@ RSpec.describe Train do
   end
 
   describe '.instances' do
-    let(:trains) { [Train.new('00001')] }
 
     it 'return count of train instances' do
       expect(Train.counter).to eq trains.size
@@ -26,7 +26,6 @@ RSpec.describe Train do
   end
 
   describe '.attr_accessor_with_history' do
-    let(:train) { Train.new('00001') }
     before do
       train.speed = 2
       train.speed = 3
@@ -36,6 +35,21 @@ RSpec.describe Train do
     end
     it 'get variable history of changes' do
       expect(train.speed_history).to eq [2, 3]
+    end
+  end
+
+  describe 'valid?' do
+    let(:wrong_train) { Train.new('12345') }
+    before {wrong_train.number = '132'}
+    context 'Data is all right' do
+      it 'return true' do
+        expect(train.valid?).to eq(true)
+      end
+    end
+    context 'Data is wrong' do
+      it 'return false' do
+        expect(wrong_train.valid?).to eq(false)
+      end
     end
   end
 end
